@@ -98,9 +98,5 @@ for column_name in white_wine_data.columns:
     plt.clf()
     print('\n')
 
-# print("Description of acidity")
-# print(red_wine_data['fixed.acidity'].describe())
-# Cleaning the data
-
 # print(red_wine_data)
 # print(white_wine_data)
