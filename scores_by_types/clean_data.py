@@ -4,6 +4,7 @@ import pandas as pd
 
 
 
+# Replace NaN with zeros.
 def replace_nan(data):
 	data = data.fillna(0)
 	return data
