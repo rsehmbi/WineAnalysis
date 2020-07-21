@@ -4,7 +4,7 @@ import pandas as pd
 
 # Put variables together for one .csv file.
 def get_output_format(normal_p, lev, variances):
-	pvalues_df = pd.DataFrame({'pvalues': normal_p})
+	pvalues_df = pd.DataFrame({'normality': normal_p})
 	variances_df = pd.DataFrame({'variance': variances})
 	lev_df = pd.DataFrame({'variance': [lev]}, index=['levene test'])
 	var_lev_df = variances_df.append(lev_df)
