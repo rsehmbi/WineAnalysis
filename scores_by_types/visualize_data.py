@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 
-def get_hist(points, range_min, range_max):
+def get_bar(points, range_min, range_max):
 	scores = np.arange(range_min, range_max+1)
 	width=0.2
 	plt.figure(figsize=(15,10))
@@ -16,5 +16,5 @@ def get_hist(points, range_min, range_max):
 	plt.legend(['Bordeaux-style Red Blend','Cabernet Sauvignon','Chardonnay','Pinot Noir','Red Blend'])
 	plt.xlabel('Scores')
 	plt.ylabel('Count')
-	# plt.show()
-	plt.savefig('./outputs/wine_scores_by_types.png')
+	plt.show()
+	# plt.savefig('./outputs/wine_scores_by_types.png')
