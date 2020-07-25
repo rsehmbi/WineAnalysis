@@ -107,13 +107,29 @@ def scatter_plot(red_wine_data, white_wine_data):
     # print(white_wine_data)
 
 
+def remove_whiteSO2_outlier(white_wine_df):
+    wine_df = white_wine_df[white_wine_df['Total_Sulphur_Dioxide'] < 400]
+    return wine_df
+
+
+def remove_redSO2_outlier(red_wine_df):
+    wine_df = red_wine_df[red_wine_df['Total_Sulphur_Dioxide'] < 250]
+    return wine_df
+
+
 def main():
     # **** Understanding the data set and their features ******
     print("****** Welcome to Physiochemical Analysis of Red and White Wine ****** \n")
+
     redwine_df, whitewine_df = load_wine_dataset()
+
     clean_redwine_df, clean_whitewine_df = cleaning_wine_dataset(
         redwine_df, whitewine_df)
+
     scatter_plot(clean_redwine_df, clean_whitewine_df)
+
+    clean_redwine_df = remove_redSO2_outlier(clean_redwine_df)
+    clean_whitewine_df = remove_whiteSO2_outlier(clean_whitewine_df)
 
 
 if __name__ == "__main__":
