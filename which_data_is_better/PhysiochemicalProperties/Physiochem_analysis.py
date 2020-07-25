@@ -71,7 +71,7 @@ def cleaning_wine_dataset(red_wine_data, white_wine_data):
     return red_wine_data, white_wine_data
 
 
-def scatter_plot(red_wine_data, white_wine_data):
+def scatter_plot(red_wine_data, white_wine_data, folder_name):
     # Next Step
     # Looking at the scatter plot of the data set to observe the general trends and see if we have any outliers
     # Plots for Red Wine data set and description of every column of dataframe
@@ -83,7 +83,8 @@ def scatter_plot(red_wine_data, white_wine_data):
                     red_wine_data[column_name], alpha=0.5)
         plt.xlabel("Wine Number")
         plt.ylabel(column_name)
-        plt.savefig('RedWineScatterPlots/{}.png'.format(column_name))
+        plt.savefig(
+            '{}/RedWineScatterPlots/{}.png'.format(folder_name, column_name))
         # Clears the old plot so plt don't overwrite
         plt.clf()
         print('\n')
@@ -98,7 +99,8 @@ def scatter_plot(red_wine_data, white_wine_data):
                     white_wine_data[column_name], alpha=0.5)
         plt.xlabel("Wine Number")
         plt.ylabel(column_name)
-        plt.savefig('WhiteWineScatterPlots/{}.png'.format(column_name))
+        plt.savefig(
+            '{}/WhiteWineScatterPlots/{}.png'.format(folder_name, column_name))
         # Clears the old plot so plt don't overwrite
         plt.clf()
         print('\n')
@@ -108,8 +110,13 @@ def scatter_plot(red_wine_data, white_wine_data):
 
 
 def remove_whiteSO2_outlier(white_wine_df):
-    wine_df = white_wine_df[white_wine_df['Total_Sulphur_Dioxide'] < 400]
-    return wine_df
+    white_wine_df = white_wine_df[white_wine_df['Total_Sulphur_Dioxide'] < 400]
+    # Free Sulphur Dioxide for one data-set in White Wine is close to 300 whereas all others are less than 150
+    white_wine_df = white_wine_df[white_wine_df['Free_Sulphur_Dioxide'] < 150]
+    # Density of white wine is 1.04g/ml which is equivalent to milk's density. Removing Outlier
+    white_wine_df = white_wine_df[white_wine_df['Density'] < 1.01]
+    white_wine_df = white_wine_df[white_wine_df['Citric_Acid'] < 1.50]
+    return white_wine_df
 
 
 def remove_redSO2_outlier(red_wine_df):
@@ -126,10 +133,12 @@ def main():
     clean_redwine_df, clean_whitewine_df = cleaning_wine_dataset(
         redwine_df, whitewine_df)
 
-    scatter_plot(clean_redwine_df, clean_whitewine_df)
+    scatter_plot(clean_redwine_df, clean_whitewine_df, "Before_Cleaning")
 
     clean_redwine_df = remove_redSO2_outlier(clean_redwine_df)
     clean_whitewine_df = remove_whiteSO2_outlier(clean_whitewine_df)
+
+    scatter_plot(clean_redwine_df, clean_whitewine_df, "After_Cleaning")
 
 
 if __name__ == "__main__":
