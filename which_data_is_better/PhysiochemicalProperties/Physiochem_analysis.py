@@ -109,7 +109,7 @@ def scatter_plot(red_wine_data, white_wine_data, folder_name):
     # print(white_wine_data)
 
 
-def remove_whiteSO2_outlier(white_wine_df):
+def remove_whitewine_outliers(white_wine_df):
     white_wine_df = white_wine_df[white_wine_df['Total_Sulphur_Dioxide'] < 400]
     # Free Sulphur Dioxide for one data-set in White Wine is close to 300 whereas all others are less than 150
     white_wine_df = white_wine_df[white_wine_df['Free_Sulphur_Dioxide'] < 150]
@@ -119,7 +119,7 @@ def remove_whiteSO2_outlier(white_wine_df):
     return white_wine_df
 
 
-def remove_redSO2_outlier(red_wine_df):
+def remove_redwine_outliers(red_wine_df):
     wine_df = red_wine_df[red_wine_df['Total_Sulphur_Dioxide'] < 250]
     return wine_df
 
@@ -135,10 +135,13 @@ def main():
 
     scatter_plot(clean_redwine_df, clean_whitewine_df, "Before_Cleaning")
 
-    clean_redwine_df = remove_redSO2_outlier(clean_redwine_df)
-    clean_whitewine_df = remove_whiteSO2_outlier(clean_whitewine_df)
+    clean_redwine_df = remove_redwine_outliers(clean_redwine_df)
+    clean_whitewine_df = remove_whitewine_outliers(clean_whitewine_df)
 
     scatter_plot(clean_redwine_df, clean_whitewine_df, "After_Cleaning")
+
+    clean_redwine_df.to_csv('cleanwineQualityReds.csv', index=False,)
+    clean_whitewine_df.to_csv('cleanwineQualityWhites.csv', index=False,)
 
 
 if __name__ == "__main__":
