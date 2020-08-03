@@ -63,10 +63,10 @@ def main():
     dftocsv("DatawithRegion2", Clean_data_1)
     # Interesting finding, all the datasets now have country = US.
     # Verify if that's true
-    grouped_df = Clean_data_1.groupby("country")
+    grouped_country = Clean_data_1.groupby("country")
     print("Checking this")
-    grouped_df = grouped_df.agg({"country": "nunique"})
-    print(grouped_df)
+    grouped_country = grouped_country.agg({"country": "nunique"})
+    print(grouped_country)
     # Yes, there is only one country, can do dropna on all. Result would be only from US
 
     # Drop Region 2 column and then drop NA values
@@ -74,16 +74,17 @@ def main():
     Clean_data_2 = dropNaValues(Clean_data_2)
     dftocsv("DataWithoutRegion2", Clean_data_2)
 
-    grouped_df_2 = Clean_data_2.groupby("country")
+    grouped_country_2 = Clean_data_2.groupby("country")
     print("Checking this 2")
-    grouped_df_2 = grouped_df_2.agg({"country": "nunique"})
-    print(grouped_df_2)
+    grouped_country_2 = grouped_country_2.agg({"country": "nunique"})
+    print(grouped_country_2)
 
     # The only numerical values we have for dataset is points and price.
     # Describing that information
     # Checking the if the points are greater >100 and less <0 to check for the outliers.
     # Checking the price as well to check for outliers since the price can't be less than 0
-    # describepricepoints(wine_data_set)
+    describepricepoints(Clean_data_1)
+    describepricepoints(Clean_data_2)
 
 
 if __name__ == "__main__":
