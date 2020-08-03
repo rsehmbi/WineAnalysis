@@ -75,6 +75,7 @@ def main():
     # GNB(redwine_df) # Gives the accuracy score of 56%
 
     # Gives the accuracy score of 70%
+
     GBC(redwine_df)  # 0.68
     GBC(whitewine_df)  # 0.7001
     # Analyzing histogram gives a hint
