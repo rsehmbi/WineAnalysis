@@ -44,24 +44,43 @@ def printbarplot(wine_df):
     plt.clf()
 
 
-def DecisionTree(X_train, y_train, X_valid, y_valid):
+def DecisionTree(wine_df):
+    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['points_'])
+    X = wine_df.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+
     model = DecisionTreeClassifier(max_depth=30)
     model.fit(X_train, y_train)
-    print("Score with Decision Tree Classifier" +
+    print("Score with Decision Tree Classifier " +
           str(model.score(X_valid, y_valid)))
 
 
-def GB(X_train, y_train, X_valid, y_valid):
+def GB(wine_df):
+    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['points_'])
+    X = wine_df.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+
     modelGB = GradientBoostingClassifier(n_estimators=50,
                                          max_depth=50, min_samples_leaf=0.1)
     modelGB.fit(X_train, y_train)
-    print("Score with Gradient Boosting"+str(modelGB.score(X_valid, y_valid)))
+    print("Score with Gradient Boosting "+str(modelGB.score(X_valid, y_valid)))
 
 
-def KNN(X_train, y_train, X_valid, y_valid):
+def KNN(wine_df):
+    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['points_'])
+    X = wine_df.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+
     modelKNN = KNeighborsClassifier(n_neighbors=1)
     modelKNN.fit(X_train, y_train)
-    print(modelKNN.score(X_valid, y_valid))
+    print("Score with K-Nearest Neighbours " +
+          str(modelKNN.score(X_valid, y_valid)))
 
 
 def WithoutRegion2Analysis(wine_df):
@@ -88,15 +107,12 @@ def WithoutRegion2Analysis(wine_df):
     wine_df['region_'] = region_1_
     wine_df['points_'] = points_
 
-    X = wine_df[['country_', 'designation_',
-                 'province_', 'region_', 'winery_']].values
-    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['Unnamed: 0', 'country', 'designation', 'price',
+                                    'province', 'winery', 'region_1', 'points', 'variety'])
 
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
-
-    DecisionTree(X_train, X_valid, y_train, y_valid)
-    GB(X_train, X_valid, y_train, y_valid)
-    KNN(X_train, X_valid, y_train, y_valid)
+    DecisionTree(wine_df)
+    GB(wine_df)
+    KNN(wine_df)
 
 
 def WithRegionAnalysis(wine_df):
@@ -121,15 +137,12 @@ def WithRegionAnalysis(wine_df):
     wine_df['region2_'] = region_2_
     wine_df['points_'] = points_
 
-    X = wine_df[['country_', 'designation_',
-                 'province_', 'region1_', 'region2_', 'winery_']].values
-    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['Unnamed: 0', 'country', 'designation', 'price',
+                                    'province', 'winery', 'region_1', 'region_2', 'points', 'variety'])
 
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
-
-    DecisionTree(X_train, X_valid, y_train, y_valid)
-    GB(X_train, X_valid, y_train, y_valid)
-    KNN(X_train, X_valid, y_train, y_valid)
+    DecisionTree(wine_df)
+    GB(wine_df)
+    KNN(wine_df)
 
 
 def main():
@@ -138,7 +151,14 @@ def main():
     wine_dataset_with_region = loaddatasets("DatawithRegion2")
 
     Analyze_withoutRegion = WithoutRegion2Analysis(wine_dataset_without_region)
+    # Score with Decision Tree Classifier 0.23341313269493844
+    # Score with Gradient Boosting 0.1629046967624259
+    # Score with K-Nearest Neighbours 0.25216598267213863
     Analyze_withRegion = WithRegionAnalysis(wine_dataset_with_region)
+
+    # Score with Decision Tree Classifier 0.2199272385870203
+    # Score with Gradient Boosting 0.16289167938035443
+    # Score with K-Nearest Neighbours 0.2242694519422603
 
 
 if __name__ == "__main__":
