@@ -52,6 +52,6 @@ with open('vivino_red_white.csv', 'w') as f:
 	    	lst = region.split(' ')
 	    	rating = ratings.split(' ')[0]
 	    	subregion, country = lst[0], lst[len(lst)-1]
-	    	csv_writer.writerow([title, subregion+'-'+country, price, average+'/'+rating])
+	    	csv_writer.writerow([title, subregion+', '+country, price, average+'/'+rating])
 
 
