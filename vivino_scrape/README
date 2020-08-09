@@ -1,1 +1,10 @@
 vivino_scrape_sel.py scrapes red and white wine data from vivino.com.
+
+
+To run vivino_scrape_sel.py:
+• Install Selenium: pip3 install selenium
+• Install webdriver for your Windows web browser:
+	• Firefox: geckodriver, https://medium.com/ananoterminal/install-selenium-on-windows-f4b6bc6747e4
+	• Chrome: ChromeDriver, http://jonathansoma.com/lede/foundations-2018/classes/selenium/selenium-windows-install/
+
+NOTE: I have not tested the instructions to install the webdriver above.
