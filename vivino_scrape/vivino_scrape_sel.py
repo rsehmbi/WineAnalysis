@@ -33,4 +33,3 @@ with open("vivino_data.csv", "w") as f:
         row['ratings'] = r.find("div", {"class": "vivinoRatingWide__averageValue--1zL_5"}).text
         row['number of ratings'] = int(r.find("div", {"class": "vivinoRatingWide__basedOn--s6y0t"}).text.split()[0])
         csv_writer.writerow([row['title'], row['region'], row['ratings'], row['number of ratings']])
-        print("{},{},{},{}".format(row['title'], row['region'], row['ratings'], row['number of ratings']))
