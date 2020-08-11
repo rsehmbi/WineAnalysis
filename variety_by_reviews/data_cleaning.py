@@ -11,6 +11,7 @@ def get_lowercase(data):
 
 def remove_num_punctuation(data):
     data = data.str.replace(r'\d+', '')
+    data = data.str.replace(r'(wine|Wine|WINE)', '')
     data = data.str.replace(r'[^\w\s]', '')
     return data
 

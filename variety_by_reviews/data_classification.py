@@ -3,12 +3,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
-# from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
+# from sklearn.naive_bayes import MultinomialNB
 # from sklearn.svm import SVC
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.neural_network import MLPClassifier
-
 
 
 def split_data(X, y):
@@ -51,12 +50,12 @@ def get_randomforest_model():
     return model
 
 def classify_data(data):
-    print("====> Running classification, this may take a few minutes ... <====")
+    print("====> Running classification, this may take a while... <====")
     X_train, X_valid, y_train, y_valid = split_data(data['description'], data['variety'])
     logisticregr_model = get_logisticRegr_model()
     logisticregr_model.fit(X_train, y_train)
     # print("LogisticRegression train score = {}".format(logisticregr_model.score(X_train, y_train)))
-    print("LogisticRegression valid score = {}".format(logisticregr_model.score(X_valid, y_valid)))
+    print("Validation score = {}".format(logisticregr_model.score(X_valid, y_valid)))
 
 
     # prediction = logisticregr_model.predict(X_valid)
