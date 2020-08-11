@@ -1,1 +1,0 @@
-Analyze wine by types.
