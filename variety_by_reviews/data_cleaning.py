@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 
@@ -16,7 +15,7 @@ def remove_num_punctuation(data):
     return data
 
 def get_popular_variety(data):
-    variety = data.value_counts()[:30]
+    variety = data.value_counts()[:10]
     return variety
 
 def join_variety(data, variety):
@@ -24,19 +23,11 @@ def join_variety(data, variety):
     joined = pd.merge(data, variety, on='variety')
     return joined
 
-def agg_description(data):
-    data = data.groupby(['variety'])['description'].apply(' '.join).reset_index()
-    return data
-
-
 def clean_description(data):
     data = get_description(data)
     data['description'] = get_lowercase(data['description'])
     data['description'] = remove_num_punctuation(data['description'])
-    # print(data)
     variety = get_popular_variety(data['variety'])
     data = join_variety(data, variety)
+    print("The 10 varieties of wine to be classified are: {}".format(data['variety'].unique()))
     return data
-    # data = agg_description(data)
-    # print(data)
-    # data['description'] = data['description'].apply(remove_description)
