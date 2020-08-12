@@ -31,7 +31,7 @@ def get_logisticRegr_model():
 def get_mlpclf_model():
     model = make_pipeline(
         CountVectorizer(stop_words=stopwords.words('english')),
-        MLPClassifier(solver='lbfgs', hidden_layer_sizes=(4,3), activation='logistic')
+        MLPClassifier(solver='lbfgs', hidden_layer_sizes=(4,3), activation='logistic', max_iter=400)
     )
     return model
 
@@ -54,10 +54,4 @@ def classify_data(data):
     X_train, X_valid, y_train, y_valid = split_data(data['description'], data['variety'])
     logisticregr_model = get_logisticRegr_model()
     logisticregr_model.fit(X_train, y_train)
-    # print("LogisticRegression train score = {}".format(logisticregr_model.score(X_train, y_train)))
     print("Validation score = {}".format(logisticregr_model.score(X_valid, y_valid)))
-
-
-    # prediction = logisticregr_model.predict(X_valid)
-    # df = pd.DataFrame({'truth': y_valid, 'prediction': prediction})
-    # print(df[df['truth'] != df['prediction']])
