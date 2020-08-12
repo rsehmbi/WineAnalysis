@@ -56,7 +56,7 @@ def plot_wordcloud(data):
         plt.axis('off')
         plt.title(k)
     # plt.show()
-    plt.savefig('wordcloud_by_variety.png')
+    plt.savefig('output/wordcloud_by_variety.png')
     print("  done")
 
 def plot_bar(data):
@@ -74,7 +74,7 @@ def plot_bar(data):
             ax.set_xticklabels(x, rotation=90, fontsize=8)
             k += 1
     # plt.show()
-    plt.savefig('barplots_by_variety.png')
+    plt.savefig('output/barplots_by_variety.png')
     print("  done")
 
 def explore_data(data):
