@@ -8,6 +8,7 @@ from sklearn.linear_model import LogisticRegression
 # from sklearn.svm import SVC
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.neural_network import MLPClassifier
+# from sklearn.neighbors import KNeighborsClassifier
 
 
 def split_data(X, y):
@@ -42,10 +43,17 @@ def get_svc_model():
     )
     return model
 
+def get_knn_model():
+    model = make_pipeline(
+        CountVectorizer(stop_words=stopwords.words('english')),
+        KNeighborsClassifier(n_neighbors=50)
+    )
+    return model
+
 def get_randomforest_model():
     model = make_pipeline(
         CountVectorizer(stop_words=stopwords.words('english')),
-        RandomForestClassifier(n_estimators=500, max_depth=13, min_samples_leaf=3)
+        RandomForestClassifier(n_estimators=500, max_depth=150, min_samples_leaf=3)
     )
     return model
 
