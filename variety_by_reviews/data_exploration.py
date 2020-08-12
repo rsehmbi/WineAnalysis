@@ -35,10 +35,10 @@ def get_words(data):
             'Pinot Noir':words[4], 'Red Blend':words[5], 'Riesling':words[6], 'Rosé':words[7], 'Sauvignon Blanc':words[8], 'Syrah':words[9]})
     return words
 
-def get_freq_dict(data):
+def get_freq_dict(data, N):
     freq_dict = {}
     for column in data.columns:
-        words = data[column].sort_values(ascending=False).head(60)
+        words = data[column].sort_values(ascending=False).head(N)
         freq_dict[column] = list(zip(words.index, words.values))
     return freq_dict
 
@@ -62,8 +62,8 @@ def plot_wordcloud(data):
 def plot_bar(data):
     print("Creating barplots...", end='')
     sns.set()
-    fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(16,13))
-    plt.subplots_adjust(hspace=0.9)
+    fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(14,14))
+    plt.subplots_adjust(hspace=0.8)
     keys = list(data.keys())
     k = 0
     for r in axes:
@@ -71,7 +71,7 @@ def plot_bar(data):
             x = [x[0] for x in data[keys[k]]]
             ax = sns.barplot(x, [x[1] for x in data[keys[k]]], ax=c)
             ax.set_title(keys[k])
-            ax.set_xticklabels(x, rotation=90, fontsize=8)
+            ax.set_xticklabels(x, rotation=90, fontsize=10.5)
             k += 1
     # plt.show()
     plt.savefig('output/barplots_by_variety.png')
@@ -82,9 +82,10 @@ def explore_data(data):
     corpus_count = get_count_table(corpus)
     # thirty = get_top_thirty_words(corpus_count.transpose())
     # words = get_words(thirty)
-    freq_list = get_freq_dict(corpus_count.transpose())
-    plot_wordcloud(freq_list)
-    plot_bar(freq_list)
+    freq_list_wc = get_freq_dict(corpus_count.transpose(), 70)
+    plot_wordcloud(freq_list_wc)
+    freq_list_bar = get_freq_dict(corpus_count.transpose(), 30)
+    plot_bar(freq_list_bar)
 
 
 
