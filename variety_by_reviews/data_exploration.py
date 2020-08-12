@@ -38,7 +38,7 @@ def get_words(data):
 def get_freq_dict(data):
     freq_dict = {}
     for column in data.columns:
-        words = data[column].sort_values(ascending=False).head(30)
+        words = data[column].sort_values(ascending=False).head(60)
         freq_dict[column] = list(zip(words.index, words.values))
     return freq_dict
 
@@ -62,7 +62,7 @@ def plot_wordcloud(data):
 def plot_bar(data):
     print("Creating barplots...", end='')
     sns.set()
-    fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(10,12))
+    fig, axes = plt.subplots(nrows=5, ncols=2, figsize=(16,13))
     plt.subplots_adjust(hspace=0.9)
     keys = list(data.keys())
     k = 0
