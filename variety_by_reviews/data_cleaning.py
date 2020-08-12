@@ -9,7 +9,7 @@ def get_lowercase(data):
     data = data.str.lower()
     return data
 
-def remove_num_punctuation(data):
+def remove_unwanted(data):
     data = data.str.replace(r'\d+', '')
     data = data.str.replace(r'(wine|flavor|flavors|drink|finish|shows)', '')
     data = data.str.replace(r'(riesling|pinor|noir|cabernet|sauvignon|chardonnary|merlot|blanc|bordeaux|bordeaux-style|rosé|syrah)', '')
@@ -28,7 +28,7 @@ def join_variety(data, variety):
 def clean_description(data):
     data = get_description(data)
     data['description'] = get_lowercase(data['description'])
-    data['description'] = remove_num_punctuation(data['description'])
+    data['description'] = remove_unwanted(data['description'])
     variety = get_popular_variety(data['variety'])
     data = join_variety(data, variety)
     varieties = pd.Series(data['variety'].unique())
