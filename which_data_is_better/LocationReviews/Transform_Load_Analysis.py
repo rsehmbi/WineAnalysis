@@ -10,6 +10,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
+from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 pd.options.display.max_columns = None
 
@@ -83,6 +84,18 @@ def KNN(wine_df):
           str(modelKNN.score(X_valid, y_valid)))
 
 
+def GNB(wine_df):
+    y = wine_df['points_'].values
+    wine_df = wine_df.drop(columns=['points_'])
+    X = wine_df.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+    modelGNB = GaussianNB()
+    modelGNB.fit(X_train, y_train)
+    print("Score with Gaussian Naive Bayes Neighbours " +
+          str(modelGNB.score(X_valid, y_valid)))
+
+
 def WithoutRegion2Analysis(wine_df):
     # Since there are limited number of countries, let's look at avg of each country's points and plot a graph for visualization
     printbarplot(wine_df)
@@ -113,6 +126,7 @@ def WithoutRegion2Analysis(wine_df):
     DecisionTree(wine_df)
     GB(wine_df)
     KNN(wine_df)
+    GNB(wine_df)
 
 
 def WithRegionAnalysis(wine_df):
@@ -154,7 +168,7 @@ def main():
     # Score with Decision Tree Classifier 0.23341313269493844
     # Score with Gradient Boosting 0.1629046967624259
     # Score with K-Nearest Neighbours 0.25216598267213863
-    Analyze_withRegion = WithRegionAnalysis(wine_dataset_with_region)
+    # Analyze_withRegion = WithRegionAnalysis(wine_dataset_with_region)
 
     # Score with Decision Tree Classifier 0.2199272385870203
     # Score with Gradient Boosting 0.16289167938035443

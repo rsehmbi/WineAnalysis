@@ -6,6 +6,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 def load_wine_dataset():
@@ -67,17 +69,61 @@ def GBC(wine_dataframe):
     print(model.score(X_valid, y_valid))
 
 
+def KNN(wine_dataframe):
+    y = wine_dataframe.Quality.values
+
+    wine_dataframe.drop(columns=['Quality'], inplace=True)
+
+    X = wine_dataframe.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+
+    model = make_pipeline(
+        StandardScaler(),
+        KNeighborsClassifier(n_neighbors=10)
+    )
+
+    model.fit(X_train, y_train)
+    print(model.score(X_train, y_train))
+    print(model.score(X_valid, y_valid))
+
+
+def DT(wine_dataframe):
+    y = wine_dataframe.Quality.values
+
+    wine_dataframe.drop(columns=['Quality'], inplace=True)
+
+    X = wine_dataframe.values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y)
+
+    model = make_pipeline(
+        StandardScaler(),
+        DecisionTreeClassifier(max_depth=5)
+    )
+
+    model.fit(X_train, y_train)
+    print(model.score(X_train, y_train))
+    print(model.score(X_valid, y_valid))
+
+
 def main():
     redwine_df, whitewine_df = load_wine_dataset()
     # Plot the histograms
     plot_histograms(redwine_df, whitewine_df)
 
     # GNB(redwine_df) # Gives the accuracy score of 56%
-
+    # GNB(whitewine_df) # Gives the accuracy score of 44.8%
     # Gives the accuracy score of 70%
 
-    GBC(redwine_df)  # 0.68
-    GBC(whitewine_df)  # 0.7001
+    # KNN(redwine_df) #60.75%
+    # KNN(whitewine_df) #57.84%
+
+    # GBC(redwine_df)  # 0.68
+    # GBC(whitewine_df)  # 0.7001
+
+    DT(redwine_df)
+    DT(whitewine_df)
     # Analyzing histogram gives a hint
     # Can we compare alcohols to chlorides?
     # or pH to Sulphates or SO2

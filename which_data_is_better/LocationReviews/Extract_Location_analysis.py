@@ -1,5 +1,5 @@
-import numpy as np
 import pandas as pd
+reimport numpy as np
 
 # To display all the columns of the dataframe
 pd.options.display.max_columns = None
