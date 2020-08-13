@@ -10,12 +10,12 @@ git clone https://csil-git1.cs.surrey.sfu.ca/rsehmbi/sfucmpt353.git
 ```
 ### Prerequisites
 
-In order to run the various small programs in the project you need to install python 3 including some libraries 
+In order to run the various small programs in the project you need to install python 3 including some libraries
 
 
 ### Installing
 
-The list of libraries to install before running the project 
+The list of libraries to install before running the project
 
 1. Install Pandas: https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html <br />
 2. Install Numpy: https://www.edureka.co/blog/install-numpy/
@@ -37,7 +37,17 @@ The project is divided into various small directories and programs
                     -[Other Related data]... <br />
 2. graph_resilience
 3. variety_by_reviews
+   - data
+      - 1442_8172_compressed_winemag-data-130k-v2.csv.zip
+   - output
+      - barplots_by_variety.png
+      - wordcloud_by_variety.png
+   - data_classification.py
+   - dadta_cleaning.py
+   - data_exploration.py
+   - main.py
 4. vivino_scrape
+   - vivino_scrape_sel.py
 
 
 ### How to run the individual programs and the order to run the program
@@ -51,9 +61,9 @@ The project is divided into various small directories and programs
 2. After you are in LocationReviews folder <br />
    First Command to run:
    ```
-   python3 Extract_Location_analysis.py 
+   python3 Extract_Location_analysis.py
    ```
-   After running this command you can run 
+   After running this command you can run
    ```
    python3 Transform_Load_Analysis.py
    ```
@@ -63,11 +73,35 @@ The project is divided into various small directories and programs
    ```
    First Command to run:
    ```
-   python3 Physiochem_analysis.py 
+   python3 Physiochem_analysis.py
    ```
    Seconf Command to run:
    ```
-   python3 Transform_and_Analyze.py 
+   python3 Transform_and_Analyze.py
    ```
 
+<br /><br /><br />
 
+## variety_by_reviews
+1. Non standard libraries that need to be installed:
+   ```
+   nltk
+   wordcloud
+   sklearn
+   seaborn
+   numpy
+   pandas
+   ```
+2. **Must mainain** the directory structure to read the input data and output files.
+3. cd into
+   ```
+   sfucmpt353/variety_by_reviews
+   ```
+4. Run the command:
+   ```
+   python3 main.py
+   ```
+5. The input data will be read from **sfucmpt353/variety_by_reviews/data/1442_8172_compressed_winemag-data-130k-v2.csv.zip**
+6. The visualization files will be produced in **sfucmpt353/variety_by_reviews/output/barplots_by_variety.png**
+and **sfucmpt353/variety_by_reviews/output/wordcloud_by_variety.png**
+7. The classification validation accuracy score will be output to the console.

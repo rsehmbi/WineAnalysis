@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 import csv
 
 
+# DISCLAIMER: Part of this script is taken from https://medium.com/analytics-vidhya/web-scraping-using-selenium-beautifulsoup-a0bd87762a2c,
+# and has been modified to suit our needs.
+
 # url = 'https://www.vivino.com/explore?e=eJzLLbI1VMvNzLM1UMtNrLA1NTBQS660dXZUSwYSLmoFQNn0NNuyxKLM1JLEHLX8JNuixJLMvPTi-MSy1KLE9FS1fNuU1OJktfKS6FigYjBlBACsPByG'
 url = 'https://www.vivino.com/explore?e=eJwdisEKgCAQBf_mna37HqL-IiI220RIjVWs_j7pMnOYCUodgo9kEPihzsC-NA6wDROuFt1BldVL4RNpI-Xio8srV1F2gkS7ZIu7zEubf_UfmQEcUg=='
 driver = webdriver.Firefox()
