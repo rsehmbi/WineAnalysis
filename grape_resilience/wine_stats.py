@@ -95,8 +95,6 @@ def main(in_file1, in_file2):
             )
 
     # Clean data
-    # vivino_data = extract_vintage(data)
-    # vivino_data = extract_country(data)
     vivino_data = split(vivino_data, 
             "title", 
             '(\d{4})|(N.V)', 
@@ -198,7 +196,7 @@ def main(in_file1, in_file2):
     write_to_file("comparison_stats.txt", "Mean for Scaled Data of Professional Ratings", pro_data["scaled_ratings"].mean())
 
     # T-test
-    ttest = stats.ttest_ind(vivino_data["scaled_ratings"], pro_data["scaled_ratings"])
+    ttest = stats.ttest_ind(vivino_data["scaled_ratings"], pro_data["scaled_ratings"], equal_var = False)
     write_to_file("comparison_stats.txt", "T Test results", ttest)
 
     # Mann Whitney Test
