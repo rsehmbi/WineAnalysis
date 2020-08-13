@@ -157,6 +157,7 @@ def WithRegionAnalysis(wine_df):
     DecisionTree(wine_df)
     GB(wine_df)
     KNN(wine_df)
+    GNB(wine_df)
 
 
 def main():
@@ -168,7 +169,7 @@ def main():
     # Score with Decision Tree Classifier 0.23341313269493844
     # Score with Gradient Boosting 0.1629046967624259
     # Score with K-Nearest Neighbours 0.25216598267213863
-    # Analyze_withRegion = WithRegionAnalysis(wine_dataset_with_region)
+    Analyze_withRegion = WithRegionAnalysis(wine_dataset_with_region)
 
     # Score with Decision Tree Classifier 0.2199272385870203
     # Score with Gradient Boosting 0.16289167938035443

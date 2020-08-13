@@ -1,5 +1,5 @@
 import pandas as pd
-reimport numpy as np
+import numpy as np
 
 # To display all the columns of the dataframe
 pd.options.display.max_columns = None
@@ -64,8 +64,8 @@ def main():
     # Interesting finding, all the datasets now have country = US.
     # Verify if that's true
     grouped_country = Clean_data_1.groupby("country")
-    print("Checking this")
     grouped_country = grouped_country.agg({"country": "nunique"})
+    print("The country after dropping Region2")
     print(grouped_country)
     # Yes, there is only one country, can do dropna on all. Result would be only from US
 
@@ -75,7 +75,6 @@ def main():
     dftocsv("DataWithoutRegion2", Clean_data_2)
 
     grouped_country_2 = Clean_data_2.groupby("country")
-    print("Checking this 2")
     grouped_country_2 = grouped_country_2.agg({"country": "nunique"})
     print(grouped_country_2)
 
