@@ -101,7 +101,7 @@ The project is divided into various small directories and programs
    ```
    python3 main.py
    ```
-5. The input data will be read from **sfucmpt353/variety_by_reviews/data/1442_8172_compressed_winemag-data-130k-v2.csv.zip**
-6. The visualization files will be produced in **sfucmpt353/variety_by_reviews/output/barplots_by_variety.png**
+5. The input data will be read from <br />**sfucmpt353/variety_by_reviews/data/1442_8172_compressed_winemag-data-130k-v2.csv.zip**
+6. The visualization files will be produced in <br /> **sfucmpt353/variety_by_reviews/output/barplots_by_variety.png**
 and **sfucmpt353/variety_by_reviews/output/wordcloud_by_variety.png**
 7. The classification validation accuracy score will be output to the console.
