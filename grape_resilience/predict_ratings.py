@@ -168,31 +168,53 @@ def main(in_file1, in_file2):
     for country in countries:
         df = grouped_countries.get_group(country)
         scatter(df, "region", "ratings", "Vivino " + country)
+    
     scatter(pro_data, "country", "ratings", "Professional")
     scatter(pro_data, "vintage", "ratings", "Professional")
     countries = pro_data["country"].unique()
     scatter(pro_data, "region", "ratings", "Professional United States")
+    
     # Get some prelimary statistical graphs and figures
     boxplot(vivino_data, "ratings", "Vivino")
     histogram(vivino_data, "ratings", "Vivino")
+    
     boxplot(pro_data, "ratings", "Professional")
     histogram(pro_data, "ratings", "Professional")
 
     # Preliminary stats data
     write_to_file("vivino_stats.txt", "Regression Data", vivino_data["ratings"].describe())
-    print("one")
     write_to_file("vivino_stats.txt", "Covariance of Ratings and Number of Ratings", stats.linregress(vivino_data['ratings'], vivino_data['number of ratings']).rvalue)
-    print("two")
-    write_to_file("vivino_stats.txt", "Normality Test for Ratings", stats.normaltest(vivino_data["ratings"]).pvalue)
-    print("three")
-    write_to_file("pro_stats.txt", "Regression Data", pro_data["ratings"].describe())
-    print("four")
-    write_to_file("pro_stats.txt", "Covariance of Ratings and Price", stats.linregress(pro_data['ratings'], pro_data['price']).rvalue)
-    print("five")
-    write_to_file("pro_stats.txt", "Normality Test for Ratings", stats.normaltest(pro_data["ratings"]).pvalue)
-    print("six")
 
+    write_to_file("pro_stats.txt", "Regression Data", pro_data["ratings"].describe())
+    write_to_file("pro_stats.txt", "Covariance of Ratings and Price", stats.linregress(pro_data['ratings'], pro_data['price']).rvalue)
+
+    #Scale ratings from 0 - 1
+    vivino_data["scaled_ratings"] = (vivino_data["ratings"] - vivino_data["ratings"].min()) / (vivino_data["ratings"].max() - vivino_data["ratings"].min())
+    pro_data["scaled_ratings"] = (pro_data["ratings"] - pro_data["ratings"].min()) / (pro_data["ratings"].max() - pro_data["ratings"].min())
+
+    # Check normality (test and histogram)
+    write_to_file("vivino_stats.txt", "Normality Test for Scaled Ratings", stats.normaltest(vivino_data["scaled_ratings"]).pvalue)
+    write_to_file("pro_stats.txt", "Normality Test for Scaled Ratings", stats.normaltest(pro_data["scaled_ratings"]).pvalue)
+    write_to_file("comparison_stats.txt", "Normality Test for Vivino Scaled Ratings", stats.normaltest(vivino_data["scaled_ratings"]).pvalue)
+    write_to_file("comparison_stats.txt", "Normality Test for Professional Scaled Ratings", stats.normaltest(pro_data["scaled_ratings"]).pvalue)
+
+    histogram(vivino_data, "scaled_ratings", "Vivino")
+    histogram(pro_data, "scaled_ratings", "Professional")
     
+    # Check equal variance
+    write_to_file("comparison_stats.txt", "Levene Test for Variance", stats.levene(vivino_data["scaled_ratings"], pro_data["scaled_ratings"]).pvalue)
+
+    # Calculate means
+    write_to_file("comparison_stats.txt", "Mean for Scaled Data of Vivino Ratings", vivino_data["scaled_ratings"].mean())
+    write_to_file("comparison_stats.txt", "Mean for Scaled Data of Professional Ratings", pro_data["scaled_ratings"].mean())
+
+    # T-test
+    ttest = stats.ttest_ind(vivino_data["scaled_ratings"], pro_data["scaled_ratings"])
+    write_to_file("comparison_stats.txt", "T Test results", ttest)
+
+    # Mann Whitney Test
+    mann = stats.mannwhitneyu(vivino_data["scaled_ratings"], pro_data["scaled_ratings"])
+    write_to_file("comparison_stats.txt", "Mann Whitney U Test", mann)
 
 
 
