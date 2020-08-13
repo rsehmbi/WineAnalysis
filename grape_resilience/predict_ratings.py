@@ -7,20 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from internal_error import InternalError, print_error
 from scipy import stats
-
-def extract_vintage(data):
-    split_vintage = data["title"].str.split(pat = '(\d{4})|(N.V)', expand = True)
-    data["wine"] = split_vintage[0].astype(np.str_)
-    data["vintage"] = split_vintage[1].astype(np.float)
-    data = data.drop(columns = ["title"])
-    data = data.dropna()
-    return data
-
-def extract_country(data):
-    split_region = data["region"].str.split(pat = '·', expand = True)
-    data["country"] = split_region[0]
-    data["region"] = split_region[1]
-    return data
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
 
 def split(data, col, pattern, new_col1, sec1, type1, new_col2, sec2, type2, drop_col = True, drop_na = True):
@@ -147,6 +134,8 @@ def main(in_file1, in_file2):
             drop_col = False
             )
     pro_data["ratings"] = pro_data["points"] / 20
+    pro_data = pro_data[pro_data["vintage"] <= 2020]
+
     pro_data = pro_data.drop(columns = [
         "designation", 
         "description", 
@@ -216,8 +205,94 @@ def main(in_file1, in_file2):
     mann = stats.mannwhitneyu(vivino_data["scaled_ratings"], pro_data["scaled_ratings"])
     write_to_file("comparison_stats.txt", "Mann Whitney U Test", mann)
 
+    # Means of regions
+    agg_regions = vivino_data.groupby("region").agg({"ratings":"count"})
+    agg_regions = agg_regions[agg_regions["ratings"] > 40]
+    agg_regions = pd.DataFrame(agg_regions.index)
+    reg_join = agg_regions.merge(vivino_data, on = "region")
 
+    scatter(reg_join, "region", "ratings", "Top 40 reviewed regions")
+    means = reg_join.groupby("region").agg({"ratings":"mean"})
+    write_to_file("comparison_stats.txt", "Means for Top 40 Reviewed Regions", means)
 
+    reg_join = reg_join.drop(columns = ["winery", "number of ratings", "wine", "vintage", "country", "scaled_ratings"])
+    ale = reg_join[reg_join["region"] == "Alentejano"]["ratings"]
+    als = reg_join[reg_join["region"] == "Alsace"]["ratings"]
+    bar = reg_join[reg_join["region"] == "Barbera d'Alba"]["ratings"]
+
+    bao = reg_join[reg_join["region"] == "Barolo"]["ratings"]
+    bas = reg_join[reg_join["region"] == "Barossa Valley"]["ratings"]
+    bol = reg_join[reg_join["region"] == "Bolgheri"]["ratings"]
+
+    bru = reg_join[reg_join["region"] == "Brunello di Montalcino"]["ratings"]
+    cal = reg_join[reg_join["region"] == "California"]["ratings"]
+    chi = reg_join[reg_join["region"] == "Chianti Classico"]["ratings"]
+
+    cha = reg_join[reg_join["region"] == "Châteauneuf-du-Pape"]["ratings"]
+    cot = reg_join[reg_join["region"] == "Côtes-du-Rhône"]["ratings"]
+    dou = reg_join[reg_join["region"] == "Douro"]["ratings"]
+
+    dao = reg_join[reg_join["region"] == "Dão"]["ratings"]
+    lan = reg_join[reg_join["region"] == "Langhe"]["ratings"]
+    mar = reg_join[reg_join["region"] == "Marlborough"]["ratings"]
+
+    mcl = reg_join[reg_join["region"] == "McLaren Vale"]["ratings"]
+    men = reg_join[reg_join["region"] == "Mendoza"]["ratings"]
+    mon = reg_join[reg_join["region"] == "Montefalco"]["ratings"]
+
+    nap = reg_join[reg_join["region"] == "Napa Valley"]["ratings"]
+    nia = reg_join[reg_join["region"] == "Niagara Peninsula"]["ratings"]
+    oka = reg_join[reg_join["region"] == "Okanagan Valley"]["ratings"]
+
+    pas = reg_join[reg_join["region"] == "Paso Robles"]["ratings"]
+    pau = reg_join[reg_join["region"] == "Pauillac"]["ratings"]
+    pes = reg_join[reg_join["region"] == "Pessac-Léognan"]["ratings"]
+
+    pom = reg_join[reg_join["region"] == "Pomerol"]["ratings"]
+    rio = reg_join[reg_join["region"] == "Rioja"]["ratings"]
+    rus = reg_join[reg_join["region"] == "Russian River Valley"]["ratings"]
+
+    sai = reg_join[reg_join["region"] == "Saint-Julien"]["ratings"]
+    sae = reg_join[reg_join["region"] == "Saint-Émilion Grand Cru"]["ratings"]
+    san = reg_join[reg_join["region"] == "Sancerre"]["ratings"]
+
+    son = reg_join[reg_join["region"] == "Sonoma Coast"]["ratings"]
+    soc = reg_join[reg_join["region"] == "Sonoma County"]["ratings"]
+    sou = reg_join[reg_join["region"] == "South Australia"]["ratings"]
+
+    ste = reg_join[reg_join["region"] == "Stellenbosch"]["ratings"]
+    sud = reg_join[reg_join["region"] == "Südtirol - Alto Adige"]["ratings"]
+    ter = reg_join[reg_join["region"] == "Terre Siciliane"]["ratings"]
+
+    tor = reg_join[reg_join["region"] == "Toro"]["ratings"]
+    tos = reg_join[reg_join["region"] == "Toscana"]["ratings"]
+    ven = reg_join[reg_join["region"] == "Veneto"]["ratings"]
+
+    wil = reg_join[reg_join["region"] == "Willamette Valley"]["ratings"]
+
+    anova = stats.f_oneway(ale,als,bar,bao,bas,bol,bru,cal,chi,cha,cot,dou,dao,lan,mar,mcl,men,mon,nap,nia,oka,pas,pau,pes,pom,rio,rus,sai,sae,san,son,soc,sou,ste,sud,ter,tor,tos,ven,wil)
+    write_to_file("comparison_stats.txt", "ANOVA comparison of regions", anova)
+
+    pd.melt(reg_join)
+    x_data = pd.DataFrame({
+        'Alentejano':ale, 'Alsace':als, "Barbera d'Alba":bar, 'Barolo':bao,
+        'Barossa Valley':bas, 'Bolgheri':bol, 'Brunello di Montalcino':bru,
+        'California':cal, 'Chianti Classico':chi, 'Châteauneuf-du-Pape':cha,
+        'Côtes-du-Rhône':cot, 'Douro':dou, 'Dão':dao, 'Langhe':lan, 'Marlborough':mar,
+        'McLaren Vale':mcl, 'Mendoza':men, 'Montefalco':mon, 'Napa Valley':nap,
+        'Niagara Peninsula':nia, 'Okanagan Valley':oka, 'Paso Robles':pas, 'Pauillac':pau,
+        'Pessac-Léognan':pes, 'Pomerol':pom, 'Rioja':rio, 'Russian River Valley':rus,
+        'Saint-Julien':sai, 'Saint-Émilion Grand Cru':sae, 'Sancerre':san,
+        'Sonoma Coast':son, 'Sonoma County':soc, 'South Australia':sou, 'Stellenbosch':ste,
+        'Südtirol - Alto Adige':sud, 'Terre Siciliane':ter, 'Toro':tor, 'Toscana':tos,
+        'Veneto':ven, 'Willamette Valley':wil})
+    x_melt = pd.melt(x_data)
+    x_melt = x_melt.dropna()
+    posthoc = pairwise_tukeyhsd(x_melt['value'], x_melt['variable'],alpha=0.05)
+    
+    write_to_file("comparison_stats.txt", "Tukey HSD PostHoc Analysis of Top 40 Regions", posthoc)
+    fig = posthoc.plot_simultaneous(figsize = (25, 20), xlabel = "ratings", ylabel = "Top 40 reviewes regions")
+    fig.savefig("figures/posthoc")
 
 if __name__=='__main__':
     try:
