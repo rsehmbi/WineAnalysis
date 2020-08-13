@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 # from sklearn.naive_bayes import MultinomialNB
 # from sklearn.svm import SVC
 # from sklearn.ensemble import RandomForestClassifier
-# from sklearn.neural_network import MLPClassifier
+from sklearn.neural_network import MLPClassifier
 # from sklearn.neighbors import KNeighborsClassifier
 
 
@@ -32,7 +32,7 @@ def get_logisticRegr_model():
 def get_mlpclf_model():
     model = make_pipeline(
         CountVectorizer(stop_words=stopwords.words('english')),
-        MLPClassifier(solver='lbfgs', hidden_layer_sizes=(4,3), activation='logistic', max_iter=400)
+        MLPClassifier(solver='lbfgs', hidden_layer_sizes=(10,9), activation='logistic', max_iter=1000)
     )
     return model
 
