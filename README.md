@@ -30,12 +30,18 @@ The project is divided into various small directories and programs
     - LocationReviews <br />
                     -Extract_Location_analysis.py <br />
                     -Transform_Load_Analysis.py <br />
-                    -[Other Related data]... <br />
+                    -[Other related files]... <br />
     - PhysiochemicalProperties <br />
                     -Physiochem_analysis.py <br />
                     -Transform_and_Analyze.py <br />
-                    -[Other Related data]... <br />
+                    -[Other related files]... <br />
 2. graph_resilience
+    <br />
+    - grape_resilience.py <br />
+    - internal_error.py<br />
+    - predict_ratings.py<br />
+    - wine_stats.py<br />
+    - [Other related files]
 3. variety_by_reviews
    - data
       - 1442_8172_compressed_winemag-data-130k-v2.csv.zip
@@ -81,7 +87,14 @@ The project is divided into various small directories and programs
    ```
 
 <br /><br /><br />
+##  grape_resilience
+To run:
+```
+python3 wine_stats.py merge.csv winemag-data-130k-v2.csv
+```
+Various figures will be output in figures, stats data can be found in stats
 
+<br /><br /><br />
 ## variety_by_reviews
 1. Non standard libraries that need to be installed:
    ```
