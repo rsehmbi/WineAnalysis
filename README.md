@@ -86,7 +86,7 @@ The project is divided into various small directories and programs
    python3 Transform_and_Analyze.py
    ```
 
-<br />
+<br /><br /><br />
 ##  grape_resilience
 To run:
 ```
@@ -94,7 +94,7 @@ python3 wine_stats.py merge.csv winemag-data-130k-v2.csv
 ```
 Various figures will be output in figures, stats data can be found in stats
 
-<br />
+<br /><br /><br />
 ## variety_by_reviews
 1. Non standard libraries that need to be installed:
    ```
