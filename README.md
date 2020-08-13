@@ -95,7 +95,7 @@ The project is divided into various small directories and programs
 2. **Must mainain** the directory structure to read the input data and output files.
 3. cd into
    ```
-   sfucmpt353/variety_by_reviews
+   cd sfucmpt353/variety_by_reviews
    ```
 4. Run the command:
    ```
